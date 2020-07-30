@@ -12,5 +12,6 @@ mongoose.connect(uri, { useNewUrlParser: true });
 
 // Export the user schema
 module.exports = {
-  User: require('../schema/user-schema')
+  User: require('../schema/user-schema'),
+  Blog: require('../schema/blog-schema')
 }
