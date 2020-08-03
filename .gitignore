@@ -7,3 +7,6 @@
 .settings/
 
 .vscode/
+
+# Node Module folder
+node_modules/
