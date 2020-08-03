@@ -1,8 +1,7 @@
-// Express dependency
-const express = require("express");
-
 // Database helper dependency
 const db = require("../database/db");
+
+// Database Schemas from db helper
 const User = db.User;
 const Blog = db.Blog;
 
@@ -16,20 +15,34 @@ module.exports = (app) => {
   });
 
   // Adds a username and password pair to database
-  app.post("/user", (request, response) => {
-    console.log(" Got a user post request.");
+  app.post("/user", (request, response, next) => {
+    console.log("Register New User Request");
     const user = new User(request.body);
-    console.log(user);
-    response.json({ data: "gotten" });
-    user.save();
+
+    user
+      .save()
+      .then(() => {
+        response.json({ "New User": user.username });
+        console.log({ "New User": user.username });
+      })
+      .catch((err) => {
+        next(err);
+      });
   });
 
   // Adds a Blog post to the blogs database
-  app.post("/blog", (request, response) => {
-    console.log("Got a blog post request.");
+  app.post("/blog", (request, response, next) => {
+    console.log("Create New Blog Post Request");
     const blog = new Blog(request.body);
-    console.log(request.body);
-    response.json({ data: "gotten" });
-    blog.save();
+
+    blog
+      .save()
+      .then(() => {
+        response.json({ "New Blog Post": blog.title });
+        console.log({ "New Blog Post": blog.content });
+      })
+      .catch((err) => {
+        next(err);
+      });
   });
 };

@@ -1,7 +1,7 @@
 // Import Mongoose dependency
 const mongoose = require("mongoose");
 // Database environment for storing username and password
-require('dotenv').config();
+require("dotenv").config();
 
 // URI Encode username and password for uri string
 const username = encodeURIComponent(process.env.DB_USER);
@@ -10,7 +10,11 @@ const uri = `mongodb+srv://${username}:${password}@cluster0.bufry.mongodb.net/bl
 
 // Connect to MongoDB with Mongoose. Catch Error if connection fails.
 mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => {
     console.log("Database connection successful");
   })
@@ -19,7 +23,7 @@ mongoose
     console.error(err);
   });
 
-// Export the user schema
+// Export Mongoose schemas for use of controller
 module.exports = {
   User: require("../schema/user-schema"),
   Blog: require("../schema/blog-schema"),
