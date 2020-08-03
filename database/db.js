@@ -1,7 +1,7 @@
 // Import Mongoose dependency
 const mongoose = require("mongoose");
 // Database environment for storing username and password
-console.log(require('dotenv').config());
+require('dotenv').config();
 
 // URI Encode username and password for uri string
 const username = encodeURIComponent(process.env.DB_USER);
