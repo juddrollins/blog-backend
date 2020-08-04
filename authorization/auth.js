@@ -1,25 +1,17 @@
+// Import express-jwt dependency 
 const expressJwt = require('express-jwt');
-
+// Export jwt method
 module.exports = jwt;
+// Environment variable for storing secret
+require("dotenv").config();
 
+// Label paths that require jwt authentication
 function jwt() {
-    const secret = config.secret;
-    return expressJwt({ secret, algorithms: ['HS256'], isRevoked }).unless({
+    const secret = process.env.SECRET;
+    return expressJwt({ secret, algorithms: ['HS256'] }).unless({
         path: [
             // public routes that don't require authentication
-            '/users/authenticate',
-            '/users/register'
+            '/user/create',
         ]
     });
 }
-
-async function isRevoked(req, payload, done) {
-    const user = await userService.getById(payload.sub);
-
-    // revoke token if user no longer exists
-    if (!user) {
-        return done(null, true);
-    }
-
-    done();
-};

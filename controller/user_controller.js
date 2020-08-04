@@ -4,7 +4,7 @@ const user_service = require("../service/user_service");
 // Export of API user request options for backend
 module.exports = (app) => {
   // Adds a username and password pair to database
-  app.post("/user", (request, response, next) => {
+  app.post("/user/create", (request, response, next) => {
     console.log("Register New User Request");
 
     //Send request body to user service. Catch errors
