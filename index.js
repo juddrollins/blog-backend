@@ -10,8 +10,10 @@ app.use(cors());
 // Setup body parsing for app
 app.use(bodyParser.json());
 
-// Setup handling for controller file
-require("./controller/controller")(app);
+// Setup handling for user controller file
+require("./controller/user_controller")(app);
+// Setup handling for blog controller file
+require("./controller/blog_controller")(app);
 
 // Setup error handling for the app
 app.use(errorHandler);

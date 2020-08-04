@@ -10,8 +10,6 @@ const username = encodeURIComponent(process.env.DB_USER);
 const password = encodeURIComponent(process.env.DB_PASSWORD);
 const uri = `mongodb+srv://${username}:${password}${config.connectionString}`;
 
-console.log(uri)
-
 // Connect to MongoDB with Mongoose. Catch Error if connection fails.
 mongoose
   .connect(uri, {
