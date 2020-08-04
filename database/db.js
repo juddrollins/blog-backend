@@ -1,12 +1,16 @@
 // Import Mongoose dependency
 const mongoose = require("mongoose");
+// Import database connection dependency
+const config = require('../config.json');
 // Database environment for storing username and password
 require("dotenv").config();
 
 // URI Encode username and password for uri string
 const username = encodeURIComponent(process.env.DB_USER);
 const password = encodeURIComponent(process.env.DB_PASSWORD);
-const uri = `mongodb+srv://${username}:${password}@cluster0.bufry.mongodb.net/blog?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${username}:${password}${config.connectionString}`;
+
+console.log(uri)
 
 // Connect to MongoDB with Mongoose. Catch Error if connection fails.
 mongoose
