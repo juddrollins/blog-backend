@@ -2,10 +2,15 @@
 module.exports = errorHandler;
 
 function errorHandler(err, req, res, next) {
-  // Give status code of 500 if code DNE
+  // Give status code of 500 if code is null or undefined
   err.statusCode = err.statusCode || 500;
+  err.statusCode = err.statusCode === undefined ? err.statusCode : 500;
+  if(err.statusCode === undefined){
+    err.statusCode = 500;
+  }
   // Set status to 'error' if status DNE
   err.status = err.status || "error";
+  err.status = err.status === undefined ? "error" : err.status;
 
   // Error response used for log and user return
   const json_resp = {

@@ -12,6 +12,10 @@ module.exports = {
 // Function for creating new user in database
 async function create(user) {
   console.log("Creating user.");
+
+  if (await User.findOne({ username: user.username })) {
+    throw 'Username "' + user.username + '" is already taken';
+  }
   const userModel = new User(user);
   const savedUser = await userModel.save();
   return savedUser;

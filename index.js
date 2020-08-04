@@ -23,5 +23,6 @@ require("./controller/blog_controller")(app);
 
 // Setup error handling for the app
 app.use(errorHandler);
+
 // Start app listening at port 3000
 app.listen(3000, () => console.log("listening at 3000"));
