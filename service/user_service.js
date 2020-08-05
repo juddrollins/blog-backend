@@ -39,8 +39,12 @@ async function create(user) {
 
 // Function for authenticating a user. Will return undefined if no user is found
 async function login({ username, password }) {
+  console.log("Logging in user.");
+
+  // See if user exists in database
   const user = await User.findOne({ username });
 
+  // Check to see if user password is correct. If password is correct return user with token
   if (user && bcrypt.compareSync(password, user.hash)) {
     const token = jwt.sign({ sub: user.id }, process.env.SECRET);
     return { user: user.username, token };

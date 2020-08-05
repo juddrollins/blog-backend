@@ -7,6 +7,7 @@ const Blog = db.Blog;
 // Export the blog service functions
 module.exports = {
   create,
+  getAll,
 };
 
 // Function for creating new blog post in database
@@ -17,4 +18,12 @@ async function create(post) {
   const savedPost = await blog.save();
 
   return savedPost;
+}
+
+// Function for returning all of the blog posts to the user
+async function getAll() {
+  console.log("Gathering all posts.");
+
+  // Return all posts in database to user
+  return await Blog.find();
 }
