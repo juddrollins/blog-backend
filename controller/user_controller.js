@@ -7,14 +7,35 @@ module.exports = (app) => {
   app.post("/user/create", (request, response, next) => {
     console.log("Register New User Request");
 
-    //Send request body to user service. Catch errors
+    // Send request body to user service. Catch errors
     user_service
       .create(request.body)
-      .then(user => {
+      .then((user) => {
         response.json({ "New User": user.username });
         console.log({ "New User": user.username });
       })
       .catch((err) => {
+        // Pass error to error-handler service
+        next(err);
+      });
+  });
+
+  app.post("/user/login", (request, response, next) => {
+    console.log("User Login Request");
+
+    // Send request body to user service. Catch errors
+    user_service
+      .login(request.body)
+      .then((token) => {
+        token
+          ? response.json(token)
+          : response
+              .status(400)
+              .json({ message: "username or password incorrect" });
+        console.log(token);
+      })
+      .catch((err) => {
+        // Pass error to error-handler service
         next(err);
       });
   });
