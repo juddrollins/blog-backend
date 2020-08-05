@@ -2,6 +2,8 @@
 const db = require("../database/db");
 // Import for creating json web token
 const jwt = require("jsonwebtoken");
+// Import for password hashing
+const bcrypt = require("bcryptjs");
 // Database environment for storing username and password
 require("dotenv").config();
 
@@ -18,10 +20,19 @@ module.exports = {
 async function create(user) {
   console.log("Creating user.");
 
+  // Check to see if user already exists in the database
   if (await User.findOne({ username: user.username })) {
     throw { message: "Username " + user.username + " is already taken" };
   }
+
   const userModel = new User(user);
+
+  // Checks to see if user entered a password
+  if (user.password) {
+    userModel.hash = bcrypt.hashSync(user.password, 10);
+  }
+
+  // Saves user. Will be rejected by user Model if password was not provided and hashed
   const savedUser = await userModel.save();
   return savedUser;
 }
@@ -30,7 +41,7 @@ async function create(user) {
 async function login({ username, password }) {
   const user = await User.findOne({ username });
 
-  if (user && user.password === password) {
+  if (user && bcrypt.compareSync(password, user.hash)) {
     const token = jwt.sign({ sub: user.id }, process.env.SECRET);
     return { user: user.username, token };
   }

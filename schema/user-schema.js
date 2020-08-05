@@ -7,12 +7,24 @@ let userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
-  password: {
+  hash: {
     type: String,
     required: true,
-  }
+  },
+  firstname: {
+    type: String,
+    require: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Export Mongoose user schema
