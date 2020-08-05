@@ -2,7 +2,7 @@
 module.exports = errorHandler;
 
 function errorHandler(err, req, res, next) {
-  // Give status code of 500 if code DNE
+  // Give status code of 500 if code is null or undefined
   err.statusCode = err.statusCode || 500;
   // Set status to 'error' if status DNE
   err.status = err.status || "error";
