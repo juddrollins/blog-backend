@@ -44,9 +44,17 @@ async function login({ username, password }) {
   // See if user exists in database
   const user = await User.findOne({ username });
 
-  // Check to see if user password is correct. If password is correct return user with token
+  // If the user could not be found in the system throw an error
+  if (!user) {
+    throw { message: "User does not exist." };
+  }
+
+  // Check to see if user password is correct. If password is correct return user with token.
+  // If the Password is incorrect throw an error
   if (user && bcrypt.compareSync(password, user.hash)) {
     const token = jwt.sign({ sub: user.id }, process.env.SECRET);
     return { user: user.username, token };
+  } else {
+    throw { message: "Password is incorrect." };
   }
 }

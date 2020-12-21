@@ -30,7 +30,7 @@ module.exports = (app) => {
         token
           ? response.json(token)
           : response
-              .status(400)
+              .status(401)
               .json({ message: "username or password incorrect" });
         console.log(token);
       })
